@@ -42,9 +42,8 @@ class DoublyLinkedList:
         If node.prev is None (already removed), raise ValueError."""
 
         if node.prev is None or node.next is None:
-            raise ValueError
-        node.prev.next = node.next
-        node.next.prev = node.prev
+            raise ValueError("There is an error with node given.")
+        self._unlink(node)
 
         node.prev = node.next = None
         self._size -= 1
@@ -76,8 +75,7 @@ class DoublyLinkedList:
         if node.prev is self._head:  # already at the front
             return
         # unlink
-        node.prev.next = node.next
-        node.next.prev = node.prev
+        self._unlink(node)
 
         first = self._head.next
         node.next = first
@@ -102,3 +100,7 @@ class DoublyLinkedList:
             yield n.value
 
             n = n.prev
+
+    def _unlink(self, node):
+        node.prev.next = node.next
+        node.next.prev = node.prev
